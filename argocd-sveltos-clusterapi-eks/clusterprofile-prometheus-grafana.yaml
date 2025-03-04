@@ -1,0 +1,29 @@
+# This Sveltos configuration deploys prometheus and grafana helm chart in all production cluster
+apiVersion: config.projectsveltos.io/v1beta1
+kind: ClusterProfile
+metadata:
+  name: prometheus-grafana
+spec:
+  dependsOn:
+  - deploy-cert-manager
+  - deploy-kyverno
+  - deploy-kyverno-resources
+  clusterSelector:
+    matchLabels:
+      env: production
+  syncMode: Continuous
+  helmCharts:
+  - repositoryURL:    https://prometheus-community.github.io/helm-charts
+    repositoryName:   prometheus-community
+    chartName:        prometheus-community/prometheus
+    chartVersion:     26.0.0
+    releaseName:      prometheus
+    releaseNamespace: prometheus
+    helmChartAction:  Install
+  - repositoryURL:    https://grafana.github.io/helm-charts
+    repositoryName:   grafana
+    chartName:        grafana/grafana
+    chartVersion:     8.6.4
+    releaseName:      grafana
+    releaseNamespace: grafana
+    helmChartAction:  Install

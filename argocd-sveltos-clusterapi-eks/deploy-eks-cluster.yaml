@@ -1,0 +1,31 @@
+apiVersion: v1
+data:
+  capi-eks.yaml: "{{- if index (getResource \"Users\") \"data\" }}\n  {{- range $key,
+    $value := (getResource \"Users\").data }}\n    apiVersion: cluster.x-k8s.io/v1beta1\n
+    \   kind: Cluster\n    metadata:\n      name: capi-eks-{{ $key }}\n      namespace:
+    {{ $key }}\n      labels:\n        type: {{ $value }}\n    spec:\n      clusterNetwork:\n
+    \       pods:\n          cidrBlocks:\n          - 192.168.0.0/16\n      controlPlaneRef:\n
+    \       apiVersion: controlplane.cluster.x-k8s.io/v1beta2\n        kind: AWSManagedControlPlane\n
+    \       name: capi-eks-control-plane-{{ $key }}\n      infrastructureRef:\n        apiVersion:
+    infrastructure.cluster.x-k8s.io/v1beta2\n        kind: AWSManagedCluster\n        name:
+    capi-eks-{{ $key }}\n---\n    apiVersion: infrastructure.cluster.x-k8s.io/v1beta2\n
+    \   kind: AWSManagedCluster\n    metadata:\n      name: capi-eks-{{ $key }}\n
+    \     namespace: {{ $key }}\n    spec: {}\n---\n    apiVersion: controlplane.cluster.x-k8s.io/v1beta2\n
+    \   kind: AWSManagedControlPlane\n    metadata:\n      name: capi-eks-control-plane-{{
+    $key }}\n      namespace: {{ $key }}\n    spec:\n      region: us-east-1\n      sshKeyName:
+    capi-eks\n      version: v1.29.0\n---\n    apiVersion: cluster.x-k8s.io/v1beta1\n
+    \   kind: MachinePool\n    metadata:\n      name: capi-eks-pool-0-{{ $key }}\n
+    \     namespace: {{ $key }}\n    spec:\n      clusterName: capi-eks-{{ $key }}\n
+    \     replicas: 2\n      template:\n        spec:\n          bootstrap:\n            dataSecretName:
+    \"\"\n          clusterName: capi-eks-{{ $key }}\n          infrastructureRef:\n
+    \           apiVersion: infrastructure.cluster.x-k8s.io/v1beta2\n            kind:
+    AWSManagedMachinePool\n            name: capi-eks-pool-0-{{ $key }}\n---\n    apiVersion:
+    infrastructure.cluster.x-k8s.io/v1beta2\n    kind: AWSManagedMachinePool\n    metadata:\n
+    \     name: capi-eks-pool-0-{{ $key }}\n      namespace: {{ $key }}\n    spec:
+    {}\n---    \n  {{- end }}\n{{- end }}\n"
+kind: ConfigMap
+metadata:
+  name: deploy-eks-cluster
+  namespace: default
+  annotations:
+    projectsveltos.io/template: ok
