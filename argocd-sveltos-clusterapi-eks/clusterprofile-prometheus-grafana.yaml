@@ -6,8 +6,7 @@ metadata:
 spec:
   dependsOn:
   - deploy-cert-manager
-  - deploy-kyverno
-  - deploy-kyverno-resources
+  - deploy-kyverno-production
   clusterSelector:
     matchLabels:
       type: production

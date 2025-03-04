@@ -64,8 +64,6 @@ kind: ClusterProfile
 metadata:
   name: deploy-kyverno-resources
 spec:
-  dependsOn:
-  - deploy-kyverno
   clusterSelector:
     matchExpressions:
     - {key: type, operator: In, values: [staging, production]}
