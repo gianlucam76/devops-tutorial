@@ -10,7 +10,7 @@ spec:
   - deploy-kyverno-resources
   clusterSelector:
     matchLabels:
-      env: production
+      type: production
   syncMode: Continuous
   helmCharts:
   - repositoryURL:    https://prometheus-community.github.io/helm-charts
