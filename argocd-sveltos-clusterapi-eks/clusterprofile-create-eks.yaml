@@ -1,0 +1,21 @@
+# This configuration instructs Sveltos to create, via CLusterAPI, a new EKS
+# cluster for every new user
+apiVersion: config.projectsveltos.io/v1beta1
+kind: ClusterProfile
+metadata:
+  name: deploy-resources
+spec:
+  clusterSelector:
+    matchLabels:
+      type: mgmt
+  templateResourceRefs:
+  - resource: # This refers to the ConfigMap in the management cluster containing all users
+      apiVersion: v1
+      kind: ConfigMap
+      name: existing-users
+      namespace: default
+    identifier: Users
+  policyRefs:
+  - name: deploy-eks-cluster
+    namespace: default
+    kind: ConfigMap

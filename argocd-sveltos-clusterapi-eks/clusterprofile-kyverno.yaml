@@ -1,0 +1,123 @@
+# This Sveltos configuration deploys kyverno helm chart with replicas 3 in all production cluster
+# This Sveltos configuration deploys kyverno helm chart with replicas 1 in all staging cluster
+# This Sveltos configuration deploys kyverno admission policy disallow-latest-tag in any production or staging cluster
+apiVersion: config.projectsveltos.io/v1beta1
+kind: ClusterProfile
+metadata:
+  name: deploy-kyverno-staging
+spec:
+  dependsOn:
+  - deploy-cert-manager
+  clusterSelector:
+    matchLabels:
+      env: staging 
+  syncMode: Continuous
+  helmCharts:
+  - repositoryURL:    https://kyverno.github.io/kyverno/
+    repositoryName:   kyverno
+    chartName:        kyverno/kyverno
+    chartVersion:     3.3.4
+    releaseName:      kyverno-latest
+    releaseNamespace: kyverno
+    helmChartAction:  Install
+    values: |
+      admissionController:
+        replicas: 1
+      backgroundController:
+        replicas: 1
+      cleanupController:
+        replicas: 1
+      reportsController:
+        replicas: 1
+---
+apiVersion: config.projectsveltos.io/v1beta1
+kind: ClusterProfile
+metadata:
+  name: deploy-kyverno-production
+spec:
+  dependsOn:
+  - deploy-cert-manager
+  clusterSelector:
+    matchLabels:
+      env: production 
+  syncMode: Continuous
+  helmCharts:
+  - repositoryURL:    https://kyverno.github.io/kyverno/
+    repositoryName:   kyverno
+    chartName:        kyverno/kyverno
+    chartVersion:     3.3.4
+    releaseName:      kyverno-latest
+    releaseNamespace: kyverno
+    helmChartAction:  Install
+    values: |
+      admissionController:
+        replicas: 3
+      backgroundController:
+        replicas: 3
+      cleanupController:
+        replicas: 3
+      reportsController:
+        replicas: 3
+---
+apiVersion: config.projectsveltos.io/v1beta1
+kind: ClusterProfile
+metadata:
+  name: deploy-kyverno-resources
+spec:
+  dependsOn:
+  - deploy-kyverno
+  clusterSelector:
+    matchExpressions:
+    - {key: env, operator: In, values: [staging, production]}
+  policyRefs:
+  - name: disallow-latest-tag # contains Kyverno ClusterPolicy
+    namespace: default
+    kind: ConfigMap
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: disallow-latest-tag
+  namespace: default
+data:
+  kyverno.yaml: |
+    apiVersion: kyverno.io/v1
+    kind: ClusterPolicy
+    metadata:
+      name: disallow-latest-tag
+      annotations:
+        policies.kyverno.io/title: Disallow Latest Tag
+        policies.kyverno.io/category: Best Practices
+        policies.kyverno.io/severity: medium
+        policies.kyverno.io/subject: Pod
+        policies.kyverno.io/description: >-
+          The ':latest' tag is mutable and can lead to unexpected errors if the
+          image changes. A best practice is to use an immutable tag that maps to
+          a specific version of an application Pod. This policy validates that the image
+          specifies a tag and that it is not called `latest`.      
+    spec:
+      validationFailureAction: audit
+      background: true
+      rules:
+      - name: require-image-tag
+        match:
+          resources:
+            kinds:
+            - Pod
+        validate:
+          message: "An image tag is required."
+          pattern:
+            spec:
+              containers:
+              - image: "*:*"
+      - name: validate-image-tag
+        match:
+          resources:
+            kinds:
+            - Pod
+        validate:
+          message: "Using a mutable image tag e.g. 'latest' is not allowed."
+          pattern:
+            spec:
+              containers:
+              - image: "!*:latest"

@@ -1,0 +1,22 @@
+# This Sveltos configuration deploys cert-manager helm chart in
+# any production or staging cluster
+apiVersion: config.projectsveltos.io/v1beta1
+kind: ClusterProfile
+metadata:
+  name: deploy-cert-manager
+spec:
+  clusterSelector:
+    matchExpressions:
+    - {key: env, operator: In, values: [staging, production]}
+  syncMode: Continuous
+  helmCharts:
+  - repositoryURL:    https://charts.jetstack.io
+    repositoryName:   jetstack
+    chartName:        jetstack/cert-manager
+    chartVersion:     v1.16.3
+    releaseName:      cert-manager
+    releaseNamespace: cert-manager
+    helmChartAction:  Install
+    values: |
+      crds:
+        enabled: true
