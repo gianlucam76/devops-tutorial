@@ -81,7 +81,7 @@ kubectl label sveltoscluster -n mgmt mgmt type=mgmt
 
 ## Step 4: Push a PR to add a new user
 
-To add a new user and trigger the creation of a corresponding EKS cluster, we will implement a straightforward GitOps workflow. First, we'll submit a pull request (PR) that modifies the `existing-users.yaml` ConfigMap within our repository. Specifically, this PR will introduce a new user entry, `user1: production`, within the data section of the ConfigMap, as shown in the provided diff. Once the PR is merged, we'll then instruct Argo CD to synchronize these changes to the management cluster. This synchronization will apply the updated ConfigMap, thereby signaling Sveltos to initiate the ClusterAPI-driven provisioning of a new production EKS cluster for "user1."
+To add a new user and trigger the creation of a corresponding EKS cluster, we will implement a straightforward GitOps workflow. First, we'll submit a pull request (PR) that modifies the `existing-users.yaml` ConfigMap within our repository. Specifically, this PR will introduce a new user entry, `user1: production`, within the data section of the ConfigMap, as shown in the provided diff. 
 
 ```diff
 diff --git a/argocd-sveltos-clusterapi-eks/existing-users.yaml b/argocd-sveltos-clusterapi-eks/existing-users.yaml
@@ -95,6 +95,8 @@ index ab0d862..10987b3 100644
 +data:
 +  user1: production
 ```
+
+Once the PR is merged, we'll then instruct Argo CD to synchronize these changes to the management cluster. This synchronization will apply the updated ConfigMap, thereby signaling Sveltos to initiate the ClusterAPI-driven provisioning of a new production EKS cluster for `user1`.
 
 ![ArgoCD, Sveltos, ClusterAPI: automate creation of EKS clusters](assets/gitops.gif)
 
@@ -114,6 +116,10 @@ sveltosctl show addons
 | mgmt/mgmt | infrastructure.cluster.x-k8s.io:AWSManagedMachinePool | user1     | capi-eks-pool-0-user1        | N/A     | 2025-03-04 12:10:02 +0100 CET | ClusterProfile/deploy-resources |
 +-----------+-------------------------------------------------------+-----------+------------------------------+---------+-------------------------------+---------------------------------+
 ```
+
+Sveltos dashboard can also be used to see what Sveltos has deployed to the management cluster:
+
+![Sveltos Dashboard](assets/sveltos_dashboard_mgmt_cluster.png)
 
 ## Step 6: Sveltos deploys production policies
 
@@ -136,6 +142,10 @@ sveltosctl show addons --namespace=user1
 | user1/capi-eks-user1 | kyverno.io:ClusterPolicy |              | disallow-latest-tag | N/A     | 2025-03-04 12:29:19 +0100 CET | ClusterProfile/deploy-kyverno-resources  |
 +----------------------+--------------------------+--------------+---------------------+---------+-------------------------------+------------------------------------------+
 ```
+
+You can also view deployed Helm charts within the Sveltos dashboard.
+
+![Sveltos Dashboard](assets/sveltos_dashboard_eks_cluster.png)
 
 ## Step 7: Removing user
 
