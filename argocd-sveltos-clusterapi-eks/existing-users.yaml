@@ -3,5 +3,3 @@ kind: ConfigMap
 metadata:
   name: existing-users
   namespace: default
-data:
-  user1: production
