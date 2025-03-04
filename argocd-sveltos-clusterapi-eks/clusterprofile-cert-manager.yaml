@@ -7,7 +7,7 @@ metadata:
 spec:
   clusterSelector:
     matchExpressions:
-    - {key: env, operator: In, values: [staging, production]}
+    - {key: type, operator: In, values: [staging, production]}
   syncMode: Continuous
   helmCharts:
   - repositoryURL:    https://charts.jetstack.io

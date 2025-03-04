@@ -10,7 +10,7 @@ spec:
   - deploy-cert-manager
   clusterSelector:
     matchLabels:
-      env: staging 
+      type: staging 
   syncMode: Continuous
   helmCharts:
   - repositoryURL:    https://kyverno.github.io/kyverno/
@@ -39,7 +39,7 @@ spec:
   - deploy-cert-manager
   clusterSelector:
     matchLabels:
-      env: production 
+      type: production 
   syncMode: Continuous
   helmCharts:
   - repositoryURL:    https://kyverno.github.io/kyverno/
@@ -68,7 +68,7 @@ spec:
   - deploy-kyverno
   clusterSelector:
     matchExpressions:
-    - {key: env, operator: In, values: [staging, production]}
+    - {key: type, operator: In, values: [staging, production]}
   policyRefs:
   - name: disallow-latest-tag # contains Kyverno ClusterPolicy
     namespace: default
