@@ -9,7 +9,7 @@ When the ResourceGraphDefinition instance is applied to the cluster, a new API o
 
 Using kro, the Platform Team can enable Developer teams to quickly deploy and manage applications and their dependencies as one unit, handling the entire lifecycle from deployment to maintenance. 
 
-## Managing a Fleet of Clusters
+## Managing a Fleet of Clusters
 
 [Sveltos](https://github.com/projectsveltos) automates and scales Kro deployments across multiple clusters. 
 
@@ -25,7 +25,7 @@ Sveltos automates the process, identifying matching clusters, resolving dependen
 
 Lets see Kro and Sveltos in practical scenarios.
 
-## Step 1: Install Sveltos on Management Cluster
+### Step 1: Install Sveltos on Management Cluster
 
 Sveltos installation details can be found [here](https://projectsveltos.github.io/sveltos/getting_started/install/install/).
 For this demo we will use helm, so while pointing to the management cluster
@@ -36,7 +36,7 @@ helm repo update
 helm install projectsveltos projectsveltos/projectsveltos -n projectsveltos --create-namespace
 ```
 
-## Step 2: Register Managed Clusters with Sveltos
+### Step 2: Register Managed Clusters with Sveltos
 
 For this tutorial, I'm using a GKE cluster and an EKS cluster as production environments, along with two Civo clusters for staging. 
 To register these clusters for Sveltos management, you'll need their respective Kubeconfigs. Use the following commands, adjusting namespace, cluster name, Kubeconfig path, and labels accordingly:
@@ -65,7 +65,7 @@ gke         cluster    true    v1.31.5-gke.1233000   env=production,projectsvelt
 mgmt        mgmt       true    v1.32.2               projectsveltos.io/k8s-version=v1.32.2,sveltos-agent=present
 ```
 
-## Step 3: Configuring Kro Deployment with a ClusterProfile 
+### Step 3: Configuring Kro Deployment with a ClusterProfile 
 
 This ClusterProfile configures Sveltos for Kro deployment, but intentionally omits a `clusterSelector`. The platform administrator is deferring cluster selection until the specific need for Kro on managed clusters becomes clear.
 
@@ -92,7 +92,7 @@ To apply this ClusterProfile to your management cluster, use the following comma
 kubectl apply -f https://raw.githubusercontent.com/gianlucam76/devops-tutorial/refs/heads/main/kro/clusterprofile-deploy-kro.yaml
 ```
 
-## Step 4: Configuring Kro ResourceGroupDefinition with a ClusterProfile
+### Step 4: Configuring Kro ResourceGroupDefinition with a ClusterProfile
 
 This ClusterProfile configures Sveltos to deploy the Kro ResourceGraphDefinition. 
 It intentionally omits a `clusterSelector`, as the target clusters are determined later when Kro's necessity on managed clusters is known. 
@@ -115,7 +115,7 @@ To apply this ClusterProfile to your management cluster, use the following comma
 kubectl apply -f https://raw.githubusercontent.com/gianlucam76/devops-tutorial/refs/heads/main/kro/clusterprofile-deploy-resource-graph-defintion.yaml
 ```
 
-## Step 5: Configuring Kro Application with a ClusterProfile
+### Step 5: Configuring Kro Application with a ClusterProfile
 
 In this step, we'll deploy a Kro application specifically to our staging clusters using a ClusterProfile.
 
@@ -162,7 +162,7 @@ sveltosctl show addons
 
 This output confirms that Kro, the ResourceGraphDefinition, and the application have been successfully deployed to both civo/cluster1 and civo/cluster2, our staging clusters.
 
-## Step 6: Deploy Kro Application to production clusters
+### Step 6: Deploy Kro Application to production clusters
 
 Now, let's extend our deployment to the production environments. We'll use another ClusterProfile to deploy the Kro application to our production clusters.
 
