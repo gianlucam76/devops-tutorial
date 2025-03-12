@@ -1,0 +1,30 @@
+apiVersion: v1
+data:
+  application.yaml: |
+    apiVersion: kro.run/v1alpha1
+    kind: Application
+    metadata:
+      name: my-application-instance
+    spec:
+      name: my-awesome-app
+      ingress:
+        enabled: false
+kind: ConfigMap
+metadata:
+  name: kro-application-staging
+  namespace: default
+---
+apiVersion: config.projectsveltos.io/v1beta1
+kind: ClusterProfile
+metadata:
+  name: deploy-kro-application-staging
+spec:
+  dependsOn:
+  - deploy-kro-resource-graph-defintion
+  clusterSelector:
+    matchLabels:
+      env: staging
+  policyRefs:
+  - name: kro-application-staging
+    namespace: default
+    kind: ConfigMap
