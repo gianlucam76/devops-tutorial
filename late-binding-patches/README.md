@@ -1,6 +1,6 @@
 # Stop Forking Your YAML
 
-*TL;DR*: Managing multi-cluster YAML usually leads to Copy-Paste drift or Helm-chart bloat. This post demonstrates how to use a surgical post-processor to decouple global application intent from regional infrastructure needs using Late-Binding.
+**TL;DR**: Managing multi-cluster YAML usually leads to Copy-Paste drift or Helm-chart bloat. This post demonstrates how to use a surgical post-processor to decouple global application intent from regional infrastructure needs using Late-Binding.
 
 ## The Problem: The "Copy-Paste" Trap
 
