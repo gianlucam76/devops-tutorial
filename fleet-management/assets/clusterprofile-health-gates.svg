@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="840" viewBox="0 0 900 840" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c4160"/>
+      <stop offset="55%" stop-color="#132c42"/>
+      <stop offset="100%" stop-color="#0a1826"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="840" fill="url(#bg)"/>
+
+  <!-- Header -->
+  <text x="50" y="50" font-size="13" font-weight="700" letter-spacing="2" fill="#7dd3fc" font-family="ui-sans-serif, Helvetica, Arial, sans-serif">SVELTOS</text>
+  <text x="50" y="90" font-size="30" font-weight="700" fill="#f3f6f9" font-family="ui-sans-serif, Helvetica, Arial, sans-serif">One ClusterProfile. Whole Fleet.</text>
+  <text x="50" y="116" font-size="15" fill="#9fb3c4" font-family="ui-sans-serif, Helvetica, Arial, sans-serif">Rolling concurrency &#183; post-deploy health checks &#183; drift detection</text>
+
+  <!-- Code card -->
+  <rect x="50" y="130" width="680" height="604" rx="14" fill="#0d1420" stroke="#233246" stroke-width="1"/>
+
+  <!-- Traffic dots -->
+  <circle cx="74" cy="152" r="6" fill="#ff5f56"/>
+  <circle cx="94" cy="152" r="6" fill="#ffbd2e"/>
+  <circle cx="114" cy="152" r="6" fill="#27c93f"/>
+  <text x="390" y="157" font-size="12" fill="#7c8ea3" text-anchor="middle">clusterprofile.yaml</text>
+  <line x1="50" y1="172" x2="730" y2="172" stroke="#233246" stroke-width="1"/>
+
+  <!-- Accent bars for highlighted blocks -->
+  <rect x="50" y="405" width="4" height="22" fill="#4dc8ff"/>
+  <rect x="50" y="429" width="4" height="46" fill="#f2a93b"/>
+
+  <!-- Code lines. Indentation is explicit per-line x (not leading spaces), and colon/value gaps use
+       tspan dx, so alignment survives whitespace-collapsing SVG renderers (e.g. GitHub's sanitizer). -->
+  <g font-size="14">
+    <text x="76" y="205"><tspan fill="#7dd3fc">apiVersion:</tspan><tspan dx="7" fill="#e6edf3">config.projectsveltos.io/v1beta1</tspan></text>
+    <text x="76" y="229"><tspan fill="#7dd3fc">kind:</tspan><tspan dx="7" fill="#e6edf3">ClusterProfile</tspan></text>
+    <text x="76" y="253"><tspan fill="#7dd3fc">metadata:</tspan></text>
+    <text x="94" y="277"><tspan fill="#7dd3fc">name:</tspan><tspan dx="7" fill="#e6edf3">platform-addons</tspan></text>
+    <text x="76" y="301"><tspan fill="#7dd3fc">spec:</tspan></text>
+    <text x="94" y="325"><tspan fill="#7dd3fc">clusterSelector:</tspan></text>
+    <text x="112" y="349"><tspan fill="#7dd3fc">matchLabels:</tspan></text>
+    <text x="130" y="373"><tspan fill="#7dd3fc">env:</tspan><tspan dx="7" fill="#e6edf3">production</tspan></text>
+    <text x="94" y="397"><tspan fill="#7dd3fc">syncMode:</tspan><tspan dx="7" fill="#e6edf3">ContinuousWithDriftDetection</tspan></text>
+    <text x="94" y="421"><tspan fill="#7dd3fc">maxUpdate:</tspan><tspan dx="7" fill="#e6edf3">10%</tspan></text>
+    <text x="94" y="445"><tspan fill="#7dd3fc">validateHealths:</tspan></text>
+    <text x="94" y="469"><tspan fill="#7dd3fc">-</tspan><tspan dx="7" fill="#7dd3fc">name:</tspan><tspan dx="7" fill="#f2b849" font-weight="700">deployment-health</tspan></text>
+    <text x="112" y="493"><tspan fill="#7dd3fc">featureID:</tspan><tspan dx="7" fill="#e6edf3">Helm</tspan></text>
+    <text x="112" y="517"><tspan fill="#7dd3fc">kind:</tspan><tspan dx="7" fill="#e6edf3">Deployment</tspan></text>
+    <text x="112" y="541"><tspan fill="#7dd3fc">namespace:</tspan><tspan dx="7" fill="#e6edf3">cert-manager</tspan></text>
+    <text x="112" y="565"><tspan fill="#7dd3fc">script:</tspan><tspan dx="7" fill="#e6edf3">|</tspan></text>
+    <text x="130" y="589"><tspan fill="#8fa3b8">function evaluate()</tspan></text>
+    <text x="148" y="613"><tspan fill="#8fa3b8">...</tspan></text>
+    <text x="130" y="637"><tspan fill="#8fa3b8">end</tspan></text>
+    <text x="94" y="661"><tspan fill="#7dd3fc">helmCharts:</tspan></text>
+    <text x="94" y="685"><tspan fill="#7dd3fc">-</tspan><tspan dx="7" fill="#7dd3fc">repositoryURL:</tspan><tspan dx="7" fill="#e6edf3">https://charts.bitnami.com/bitnami</tspan></text>
+    <text x="112" y="709"><tspan fill="#7dd3fc">chartName:</tspan><tspan dx="7" fill="#e6edf3">ingress-nginx</tspan></text>
+  </g>
+
+  <!-- Callouts -->
+  <g font-family="ui-sans-serif, Helvetica, Arial, sans-serif">
+    <rect x="750" y="395" width="140" height="50" rx="8" fill="#12222f" stroke="#2a3d4f" stroke-width="1"/>
+    <rect x="750" y="395" width="3" height="50" fill="#4dc8ff"/>
+    <text x="764" y="415" font-size="11" font-weight="700" fill="#9fd8ff">ROLLING WINDOW</text>
+    <text x="764" y="432" font-size="10" fill="#7c8ea3">10% of fleet at a time</text>
+
+    <rect x="750" y="460" width="150" height="80" rx="8" fill="#12222f" stroke="#2a3d4f" stroke-width="1"/>
+    <rect x="750" y="460" width="3" height="80" fill="#f2a93b"/>
+    <text x="764" y="480" font-size="11" font-weight="700" fill="#f6c887">POST-DEPLOY GATE</text>
+    <text x="764" y="497" font-size="10" fill="#7c8ea3">Lua or CEL check on</text>
+    <text x="764" y="512" font-size="10" fill="#7c8ea3">the real cluster state,</text>
+    <text x="764" y="527" font-size="10" fill="#7c8ea3">gates the next batch</text>
+  </g>
+
+  <!-- Footer -->
+  <g font-family="ui-sans-serif, Helvetica, Arial, sans-serif">
+    <path d="M50 762 L66 762 L50 782 Z" fill="#5aa9e6"/>
+    <path d="M52 760 L70 760 L54 782 Z" fill="#8fd0ff"/>
+    <text x="80" y="775" font-size="13" font-weight="700" fill="#cfe3f5">projectsveltos.io</text>
+  </g>
+</svg>
