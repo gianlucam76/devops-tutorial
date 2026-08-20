@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" font-family="ui-sans-serif, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c4160"/>
+      <stop offset="55%" stop-color="#132c42"/>
+      <stop offset="100%" stop-color="#0a1826"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7c8ea3"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="520" fill="url(#bg2)"/>
+
+  <!-- Header -->
+  <text x="50" y="50" font-size="13" font-weight="700" letter-spacing="2" fill="#7dd3fc">SVELTOS</text>
+  <text x="50" y="88" font-size="28" font-weight="700" fill="#f3f6f9">Progressive Delivery, Not Just Deployment</text>
+  <text x="50" y="114" font-size="15" fill="#9fb3c4">ClusterPromotion &#183; automatic promotion on health &#183; manual gate before production</text>
+
+  <!-- Stage boxes -->
+  <g>
+    <!-- DEV -->
+    <rect x="40" y="190" width="220" height="170" rx="12" fill="#0d1420" stroke="#233246" stroke-width="1"/>
+    <circle cx="234" cy="208" r="6" fill="#4dc8ff"/>
+    <text x="150" y="232" font-size="19" font-weight="700" fill="#f3f6f9" text-anchor="middle">DEV</text>
+    <text x="150" y="258" font-size="12" fill="#7c8ea3" text-anchor="middle">stage: qa</text>
+    <rect x="64" y="278" width="172" height="58" rx="8" fill="#122029" stroke="#233246"/>
+    <text x="150" y="299" font-size="11" fill="#9fd8ff" font-family="ui-monospace, Menlo, monospace" text-anchor="middle">clusterSelector</text>
+    <text x="150" y="317" font-size="11" fill="#e6edf3" font-family="ui-monospace, Menlo, monospace" text-anchor="middle">env: dev</text>
+
+    <!-- STAGING -->
+    <rect x="340" y="190" width="220" height="170" rx="12" fill="#0d1420" stroke="#233246" stroke-width="1"/>
+    <circle cx="534" cy="208" r="6" fill="#f2a93b"/>
+    <text x="450" y="232" font-size="19" font-weight="700" fill="#f3f6f9" text-anchor="middle">STAGING</text>
+    <text x="450" y="258" font-size="12" fill="#7c8ea3" text-anchor="middle">stage: staging</text>
+    <rect x="364" y="278" width="172" height="58" rx="8" fill="#122029" stroke="#233246"/>
+    <text x="450" y="299" font-size="11" fill="#9fd8ff" font-family="ui-monospace, Menlo, monospace" text-anchor="middle">clusterSelector</text>
+    <text x="450" y="317" font-size="11" fill="#e6edf3" font-family="ui-monospace, Menlo, monospace" text-anchor="middle">env: staging</text>
+
+    <!-- PRODUCTION -->
+    <rect x="640" y="190" width="220" height="170" rx="12" fill="#0d1420" stroke="#233246" stroke-width="1"/>
+    <circle cx="834" cy="208" r="6" fill="#34d399"/>
+    <text x="750" y="232" font-size="19" font-weight="700" fill="#f3f6f9" text-anchor="middle">PRODUCTION</text>
+    <text x="750" y="258" font-size="12" fill="#7c8ea3" text-anchor="middle">stage: production</text>
+    <rect x="664" y="278" width="172" height="58" rx="8" fill="#122029" stroke="#233246"/>
+    <text x="750" y="299" font-size="11" fill="#9fd8ff" font-family="ui-monospace, Menlo, monospace" text-anchor="middle">clusterSelector</text>
+    <text x="750" y="317" font-size="11" fill="#e6edf3" font-family="ui-monospace, Menlo, monospace" text-anchor="middle">env: production</text>
+  </g>
+
+  <!-- Arrows -->
+  <line x1="262" y1="275" x2="336" y2="275" stroke="#7c8ea3" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="562" y1="275" x2="636" y2="275" stroke="#7c8ea3" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Gate 1: auto -->
+  <rect x="270" y="392" width="120" height="46" rx="8" fill="#12261e" stroke="#245038"/>
+  <text x="330" y="411" font-size="11" font-weight="700" fill="#5eead4" text-anchor="middle">AUTO</text>
+  <text x="330" y="427" font-size="10" fill="#8fb8ab" text-anchor="middle">health checks pass</text>
+  <line x1="300" y1="360" x2="300" y2="392" stroke="#245038" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+  <!-- Gate 2: manual -->
+  <rect x="570" y="392" width="150" height="46" rx="8" fill="#2a1c16" stroke="#5a3a24"/>
+  <text x="645" y="411" font-size="11" font-weight="700" fill="#f6c887" text-anchor="middle">MANUAL</text>
+  <text x="645" y="427" font-size="10" fill="#c8a988" text-anchor="middle">approval required</text>
+  <line x1="600" y1="360" x2="600" y2="392" stroke="#5a3a24" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+  <!-- Footer -->
+  <path d="M50 468 L66 468 L50 488 Z" fill="#5aa9e6"/>
+  <path d="M52 466 L70 466 L54 488 Z" fill="#8fd0ff"/>
+  <text x="80" y="481" font-size="13" font-weight="700" fill="#cfe3f5">projectsveltos.io</text>
+</svg>
